@@ -2,11 +2,16 @@ import picamera
 from time import sleep
 camera = picamera.PiCamera()
 import sys
+import datetime
 #camera.zoom =  (0,0, 0.47337278106508873, 0.35526315789473684)
 camera.zoom = (0,0,1920/4056,1080/3040)
 # this preview size is half the full size
 camera.resolution=  (1920,1080)
 #camera.start_recording("vid1.h264")
+
+
+filePrefix = "vid_"
+fileExtension = ".h264"
 
 # 30fps is the default camera framerate4
 framerate = 30.0
@@ -18,29 +23,60 @@ count = 0
 
 
 
-
 increment = 1.0/(framerate*duration)
 
-# top left to top right
-#for count in range(0, framerate*duration):
-leftIndent = 0.1
-rightIndent = 0.1
-topIndent = 0
-bottomIndent = 0
+
+leftIndent = 0.0
+rightIndent = 0.0
+topIndent = 0.6447
+bottomIndent = 0.0
+
+
+def generate_file_name():
+    return filePrefix + str(datetime.datetime.now()).replace(':','_').replace('.', '_').replace(' ','') + fileExtension
+
 def left_to_right():
+    # top left to top right
     x = 0
     count = 0
     camera.start_preview(fullscreen = False, window = (960,0,960,540))
     while x < (4056-1920)/4056 - rightIndent:
         #start of iteration
         x = leftIndent + increment*float(count)
-        print(x)
-        camera.zoom = (x , 0,1920/4056, 1080/3040)
+        #print(x)
+        camera.zoom = (x , topIndent,1920/4056, 1080/3040)
         #print(camera.zoom)
         sleep(1/zoomSpeed )
         count += 1
-        print (count)
+        #print (count)
         #end of iteration
+def top_to_bottom():
+    # top to bottom
+    y = 0
+    count = 0
+    camera.start_preview(fullscreen = False, window = (960,0,960,540))
+    while y < ((3040-1080)/3040) - bottomIndent:
+        y = topIndent + increment*float(count)
+        camera.zoom = (leftIndent, y ,1920/4056, 1080/3040)
+        #print(camera.zoom)
+        sleep(1/zoomSpeed )
+        count += 1
+        #print (count)
+
+def bottom_to_top():
+    y = 1
+    count = 0
+    camera.start_preview(fullscreen = False, window = (960,0,960,540))
+    # bottom to top 
+    while y > 0 + topIndent:
+        y = (1 - ((3040-1080)/3040) - bottomIndent) - increment*float(count)
+        camera.zoom = (leftIndent, y ,1920/4056, 1080/3040)
+        #print(camera.zoom)
+        sleep(1/zoomSpeed )
+        count += 1
+        #print (count)
+        
+    
 def right_to_left():
     # top right to top left
     x = 1 - rightIndent
@@ -49,64 +85,125 @@ def right_to_left():
     #for count in range(framerate*duration, 0, -1):
     while x > (0 + leftIndent):
         x = (1 - ((4056-1920)/4056) - leftIndent) - increment*float(count)
-        camera.zoom = (x , 0, 1920/4056, 1080/3040)
+        camera.zoom = (x , topIndent, 1920/4056, 1080/3040)
         #print(camera.zoom)
         sleep(1/zoomSpeed )
         count += 1
-        print (count)
-    
-print("r to run. sp for start preview. ep for end preview. c to clear the preview. zlr to run the zoom left to right")
-print("zrl to run the zoom right to left")
+        #print (count)
+ 
+
+
+
+print("q to quit. fp for full preview. splr for start preview. eplr for end preview. c to clear the preview. zlr to run the zoom left to right")
+print("zrl to run the zoom right to left etc. upper case Z to record the zoom")
+print("li, ri, ti and bi to set indents")
 while True:
     cmd = input ()
-    if cmd == "sp":
+    # LEFT TO RIGHT
+    if cmd == "splr":
         startZoom = (leftIndent + (increment*count) , 0,1920/4056, 1080/3040)
         camera.zoom = startZoom
         camera.start_preview(fullscreen = False, window = (960,0,960,540))
-    if cmd == "ep":
+    if cmd == "eplr":
         camera.stop_preview()
         startZoom = (((4056-1920)/4056) - rightIndent , 0,1920/4056, 1080/3040)
         camera.zoom = startZoom
         camera.start_preview(fullscreen = False, window = (960,0,960,540))
+      
+    # RIGHT TO LEFT PREVIEWS
+    if cmd == "eprl":
+        startZoom = (leftIndent + (increment*count) , 0,1920/4056, 1080/3040)
+        camera.zoom = startZoom
+        camera.start_preview(fullscreen = False, window = (960,0,960,540))
+    if cmd == "sprl":
+        camera.stop_preview()
+        startZoom = (((4056-1920)/4056) - rightIndent , 0,1920/4056, 1080/3040)
+        camera.zoom = startZoom
+        camera.start_preview(fullscreen = False, window = (960,0,960,540))
+    # TOP TO BOTTOM PREVIEWS  
+    if cmd == "sptb":
+        camera.stop_preview()
+        camera.zoom = (leftIndent, topIndent ,1920/4056, 1080/3040)
+        camera.start_preview(fullscreen = False, window = (960,0,960,540))
+    if cmd == "eptb":
+        camera.stop_preview()
+        camera.zoom = (leftIndent, (((3040-1080)/3040) - bottomIndent) ,1920/4056, 1080/3040)
+        camera.start_preview(fullscreen = False, window = (960,0,960,540))
+    #BOTTOM TO TOP PREVIEWS    
+    if cmd == "epbt":
+        camera.stop_preview()
+        camera.zoom = (leftIndent, topIndent ,1920/4056, 1080/3040)
+        camera.start_preview(fullscreen = False, window = (960,0,960,540))
+    if cmd == "spbt":
+        camera.stop_preview()
+        camera.zoom = (leftIndent, (((3040-1080)/3040) - bottomIndent) ,1920/4056, 1080/3040)
+        camera.start_preview(fullscreen = False, window = (960,0,960,540))        
+        
+    if cmd == "fp":
+        camera.stop_preview()
+        camera.zoom = (0,0,4056,3040)
+        camera.start_preview(fullscreen = False, window = (960,0,960,540))
+    if cmd == "Fp":
+        camera.stop_preview()
+        camera.zoom = (0,0,4056,3040)
+        camera.start_preview(fullscreen = False, window = (950,0,960,540))
+        fileName = generate_file_name()
+        camera.start_recording(fileName)
+        input()
+        camera.stop_recording()
     if cmd == "c":
         camera.stop_preview()
+    # ZOOM LEFT RIGHT
     if cmd == "zlr":
         left_to_right()
-    if cmd =="zrl":
+    # ZOOM LEFT TO RIGHT WITH RECORD
+    if cmd == "Zlr":
+        fileName = generate_file_name()
+        camera.start_recording(fileName)
+        left_to_right()
+        camera.stop_recording()
+    # ZOOM RIGHT TO LEFT
+    if cmd == "zrl":
         right_to_left()
+    # ZOOM RIGHT TO LEFT WITH RECOR-D
+    if cmd == "Zrl":
+        fileName = generate_file_name()
+        camera.start_recording(fileName)
+        right_to_left()
+        camera.stop_recording()
+    # ZOOM TOP TO BOTTOM
+    if cmd == "ztb":
+        top_to_bottom()
+    # ZOOM TOP TO BOTTOM WITH RECORD
+    if cmd == "Ztb":
+        fileName = generate_file_name()
+        camera.start_recording(fileName)
+        top_to_bottom()
+        camera.stop_recording()
+    #ZOOM BOTTOM TO TOP
+    if cmd == "zbt":
+        bottom_to_top()
+    #ZOOM BOTTOM TO TOP WITH RECORDING
+    if cmd == "Zbt":
+        fileName = generate_file_name()
+        camera.start_recording(fileName)
+        bottom_to_top()
+        camera.stop_recording()
     if cmd == "q":
         sys.exit()
-
-
-camera.start_preview(fullscreen = False, window = (0,0,960,540))
-
-
-    
-
-#print("any key to quit")
-#input()
-    
-# top right to top left
-for count in range(framerate*duration, 0, -1):
-    camera.zoom = (increment*count/2 , 0,1920/4056, 1080/3040)
-    #print(camera.zoom)
-    sleep(1/zoomSpeed )
-    #print (count)
-    
-  
-# top left to bottom left
-for count in range(0, framerate*duration):
-    camera.zoom = (0, increment*count/2 ,1920/4056, 1080/3040)
-    #print(camera.zoom)
-    sleep(1/zoomSpeed )
-    #print (count)
-    
-# bottom left to top left
-for count in range(framerate*duration, 0, -1):
-    camera.zoom = (0, increment*count/2 ,1920/4056, 1080/3040)
-    #print(camera.zoom)
-    sleep(1/zoomSpeed )
-    #print (count)
+    if cmd == "li":
+        indent=input()
+        print (indent)
+        leftIndent = float(indent)
+    if cmd == "ri":
+        indent=input()
+        leftIndent = float(indent)
+    if cmd == "ti":
+        indent=input()
+        leftIndent = float(indent)
+    if cmd == "bi":
+        indent=input()
+        leftIndent = float(indent)
 
 
 
@@ -153,16 +250,3 @@ for count in range(0, framerate*duration):
     sleep(1/zoomSpeed )
     #print (count)
 camera.stop_recording
-
-# x,y,w,h
-"""
-for horizontal movement across the sensor the only thing that changes is x
-if y is zero then you are travelling from left to right
-y could be any value up to (3040-1080)/3040. This is 0.6447368421052632
-so effectively y could be any value up to .664 or 1960 pixels
-
-max x is (4056-1080)/4056. This is 0.7337278106508875
-
-Similarly x doesnt have to start at 0 and doesn't have to end at 
-
-"""
