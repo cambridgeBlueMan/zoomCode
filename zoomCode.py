@@ -15,7 +15,7 @@ fileExtension = ".h264"
 
 # 30fps is the default camera framerate4
 framerate = 30.0
-zoomSpeed = 40
+zoomSpeed = 30.0
 duration = 30.0
 count = 0
 
@@ -28,7 +28,7 @@ increment = 1.0/(framerate*duration)
 
 leftIndent = 0.0
 rightIndent = 0.0
-topIndent = 0.6447
+topIndent = 0.0
 bottomIndent = 0.0
 
 
@@ -40,9 +40,11 @@ def left_to_right():
     x = 0
     count = 0
     camera.start_preview(fullscreen = False, window = (960,0,960,540))
-    while x < (4056-1920)/4056 - rightIndent:
+    while True:
         #start of iteration
         x = leftIndent + increment*float(count)
+        if x >= (4056-1920)/4056 - rightIndent:
+            break
         #print(x)
         camera.zoom = (x , topIndent,1920/4056, 1080/3040)
         #print(camera.zoom)
@@ -55,8 +57,10 @@ def top_to_bottom():
     y = 0
     count = 0
     camera.start_preview(fullscreen = False, window = (960,0,960,540))
-    while y < ((3040-1080)/3040) - bottomIndent:
-        y = topIndent + increment*float(count)
+    while True:
+        y = topIndent + increment*count
+        if y > ((3040-1080)/3040) - (topIndent + bottomIndent):
+            break
         camera.zoom = (leftIndent, y ,1920/4056, 1080/3040)
         #print(camera.zoom)
         sleep(1/zoomSpeed )
@@ -68,8 +72,10 @@ def bottom_to_top():
     count = 0
     camera.start_preview(fullscreen = False, window = (960,0,960,540))
     # bottom to top 
-    while y > 0 + topIndent:
-        y = (1 - ((3040-1080)/3040) - bottomIndent) - increment*float(count)
+    while True:
+        y = ((3040-1080)/3040) - increment*count
+        if y <=0:
+            break
         camera.zoom = (leftIndent, y ,1920/4056, 1080/3040)
         #print(camera.zoom)
         sleep(1/zoomSpeed )
@@ -83,9 +89,11 @@ def right_to_left():
     count = 0 #framerate*duration
     camera.start_preview(fullscreen = False, window = (960,0,960,540))    
     #for count in range(framerate*duration, 0, -1):
-    while x > (0 + leftIndent):
+    while True:
         x = (1 - ((4056-1920)/4056) - leftIndent) - increment*float(count)
         camera.zoom = (x , topIndent, 1920/4056, 1080/3040)
+        if x <=leftIndent:
+            break
         #print(camera.zoom)
         sleep(1/zoomSpeed )
         count += 1
@@ -100,45 +108,25 @@ print("li, ri, ti and bi to set indents")
 while True:
     cmd = input ()
     # LEFT TO RIGHT
-    if cmd == "splr":
-        startZoom = (leftIndent + (increment*count) , 0,1920/4056, 1080/3040)
+    if cmd == "splr" or cmd == "eprl":
+        startZoom = (leftIndent, topIndent, 1920/4056, 1080/3040)
         camera.zoom = startZoom
         camera.start_preview(fullscreen = False, window = (960,0,960,540))
-    if cmd == "eplr":
+    if cmd == "eplr" or cmd == "sprl":
         camera.stop_preview()
-        startZoom = (((4056-1920)/4056) - rightIndent , 0,1920/4056, 1080/3040)
-        camera.zoom = startZoom
-        camera.start_preview(fullscreen = False, window = (960,0,960,540))
-      
-    # RIGHT TO LEFT PREVIEWS
-    if cmd == "eprl":
-        startZoom = (leftIndent + (increment*count) , 0,1920/4056, 1080/3040)
-        camera.zoom = startZoom
-        camera.start_preview(fullscreen = False, window = (960,0,960,540))
-    if cmd == "sprl":
-        camera.stop_preview()
-        startZoom = (((4056-1920)/4056) - rightIndent , 0,1920/4056, 1080/3040)
+        startZoom = (((4056-1920)/4056) - rightIndent , topIndent, 1920/4056, 1080/3040)
         camera.zoom = startZoom
         camera.start_preview(fullscreen = False, window = (960,0,960,540))
     # TOP TO BOTTOM PREVIEWS  
-    if cmd == "sptb":
+    if cmd == "sptb" or cmd == "epbt":
         camera.stop_preview()
         camera.zoom = (leftIndent, topIndent ,1920/4056, 1080/3040)
         camera.start_preview(fullscreen = False, window = (960,0,960,540))
-    if cmd == "eptb":
+    if cmd == "eptb" or cmd =="spbt":
         camera.stop_preview()
         camera.zoom = (leftIndent, (((3040-1080)/3040) - bottomIndent) ,1920/4056, 1080/3040)
         camera.start_preview(fullscreen = False, window = (960,0,960,540))
-    #BOTTOM TO TOP PREVIEWS    
-    if cmd == "epbt":
-        camera.stop_preview()
-        camera.zoom = (leftIndent, topIndent ,1920/4056, 1080/3040)
-        camera.start_preview(fullscreen = False, window = (960,0,960,540))
-    if cmd == "spbt":
-        camera.stop_preview()
-        camera.zoom = (leftIndent, (((3040-1080)/3040) - bottomIndent) ,1920/4056, 1080/3040)
-        camera.start_preview(fullscreen = False, window = (960,0,960,540))        
-        
+    
     if cmd == "fp":
         camera.stop_preview()
         camera.zoom = (0,0,4056,3040)
