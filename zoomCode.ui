@@ -348,6 +348,52 @@
     </item>
    </layout>
   </widget>
+  <widget class="QPushButton" name="quit">
+   <property name="geometry">
+    <rect>
+     <x>790</x>
+     <y>580</y>
+     <width>99</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Quit</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="formLayoutWidget_2">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>40</y>
+     <width>191</width>
+     <height>171</height>
+    </rect>
+   </property>
+   <layout class="QFormLayout" name="formLayout_2">
+    <item row="0" column="0">
+     <widget class="QLabel" name="duration">
+      <property name="text">
+       <string>Duration</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="lineEdit">
+      <property name="text">
+       <string>30</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QPushButton" name="fullSensor">
+      <property name="text">
+       <string>Full Sensor</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
  </widget>
  <resources/>
  <connections>
@@ -415,8 +461,124 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>lrShow</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>doZoom()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>524</x>
+     <y>294</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1029</x>
+     <y>441</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lrRecord</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>doZoomWithRecord()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>615</x>
+     <y>291</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>918</x>
+     <y>342</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tbShow</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>doZoom()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>542</x>
+     <y>381</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>773</x>
+     <y>390</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tbRecord</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>doZoomWithRecord()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>641</x>
+     <y>380</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>898</x>
+     <y>369</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fullSensor</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>setAndShowPreview()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>426</x>
+     <y>105</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>618</x>
+     <y>96</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>quit</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>doQuit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>884</x>
+     <y>607</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1065</x>
+     <y>614</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>Form</receiver>
+   <slot>setDuration(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>517</x>
+     <y>66</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>642</x>
+     <y>17</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>setAndShowPreview()</slot>
+  <slot>doZoom()</slot>
+  <slot>doZoomWithRecord()</slot>
+  <slot>doQuit()</slot>
+  <slot>setDuration(QString)</slot>
  </slots>
 </ui>
