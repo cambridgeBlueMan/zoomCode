@@ -85,7 +85,7 @@ def bottom_to_top():
     
 def right_to_left():
     # top right to top left
-    x = 1 - rightIndent
+    x = 1 - rightInden
     count = 0 #framerate*duration
     camera.start_preview(fullscreen = False, window = (960,0,960,540))    
     #for count in range(framerate*duration, 0, -1):

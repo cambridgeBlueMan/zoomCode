@@ -1,6 +1,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from zoomCodeGui import Ui_Form
 from picamera import PiCamera
+from time import sleep
+import sys
+import datetime
 """
 MainWindow.ui is a file initially created in QtDesigner.  This file is then translated into
 a single Python class called Ui_MainWindow by pyuic5.
@@ -25,7 +28,6 @@ with the passed instance of the code/widget class
 """
 class Code_Form(QtWidgets.QMainWindow):
 
-
     def __init__(self):
         super().__init__()
         # Ui_MainWindow is the main designer generated class. so create one
@@ -38,35 +40,46 @@ class Code_Form(QtWidgets.QMainWindow):
         # initialise vars
         #self.doCameraStuff()
         #self.camera = PiCamera()
-        #self.leftIndent = 0
-        #self.topIndent = 0
-        #self.topIndent = 0
-        #self.bottomIndent = 0
-         # get indents from the line edit objects
-        leftIndent = float(self.ui.leftIndent.text())
-        rightIndent = float(self.ui.rightIndent.text())
-        topIndent = float(self.ui.topIndent.text())
-        bottomIndent = float(self.ui.bottomIndent.text())
-        print(leftIndent)
+        # get indents from the line edit objects
+        self.framerate = 30.0
+        self.duration = self.getDuration()
+        self.increment = 1.0/(self.framerate*self.duration)
+
+        self.indents = self.getIndents
         self.camera.start_preview(fullscreen = False, window = (960,0,960,540))
         
-    def setAndShowPreview(self,but):
-       
+    def generateFileName(self):
+        filePrefix = "vid_"
+        fileExtension = ".h264"
+        return filePrefix + str(datetime.datetime.now()).replace(':','_').replace('.', '_').replace(' ','') + fileExtension
+  
+    def getIndents(self):
+         # get indents from the line edit objects and put them into a dictionary
+        indents = {
+            "left": float(self.ui.leftIndent.text()),
+            "right": float(self.ui.rightIndent.text()),
+            "top": float(self.ui.topIndent.text()),
+            "bottom": float(self.ui.bottomIndent.text())
+            }
+        #print(indents)
+        return(indents)
         
+    def setAndShowPreview(self,but):
         self.camera.stop_preview()
         print(self.sender().objectName())
+        indents = self.getIndents()
+        print(type(indents))
         # which preview is it?
         if self.sender().objectName() == 'rightPreview':
-            startZoom = (((4056-1920)/4056) - rightIndent , topIndent, 1920/4056, 1080/3040)  
+            startZoom = (((4056-1920)/4056) - indents["right"] , indents["top"], 1920/4056, 1080/3040)  
         elif self.sender().objectName() == 'leftPreview':
-            startZoom = (leftIndent, topIndent, 1920/4056, 1080/3040)
+            startZoom = (indents["left"], indents["top"], 1920/4056, 1080/3040)
         elif self.sender().objectName() == 'topPreview':
-            startZoom = (leftIndent, topIndent ,1920/4056, 1080/3040)
+            startZoom = (indents["left"], indents["top"] ,1920/4056, 1080/3040)
         elif self.sender().objectName() == 'bottomPreview':
-            startZoom = (leftIndent, (((3040-1080)/3040) - bottomIndent) ,1920/4056, 1080/3040)
+            startZoom = (indents["left"], (((3040-1080)/3040) - indents["bottom"]) ,1920/4056, 1080/3040)
         elif self.sender().objectName() == 'fullSensor':
             startZoom = (0,0,4056,3040)
-        
             
         # now set the zoom and show the preview   
         self.camera.zoom = startZoom
@@ -74,101 +87,118 @@ class Code_Form(QtWidgets.QMainWindow):
         
     def leftToRight(self):
         # top left to top right
+        indents = self.getIndents()
         x = 0
         count = 0
         self.camera.start_preview(fullscreen = False, window = (960,0,960,540))
         while True:
             #start of iteration
-            x = self.leftIndent + increment*float(count)
-            if x >= (4056-1920)/4056 - self.rightIndent:
+            x = indents["left"] + self.increment*float(count)
+            if x >= (4056-1920)/4056 - indents["right"]:
                 break
             #print(x)
-            self.camera.zoom = (x , self.topIndent,1920/4056, 1080/3040)
+            self.camera.zoom = (x , indents["top"],1920/4056, 1080/3040)
             #print(camera.zoom)
-            sleep(1/zoomSpeed )
+            sleep(1/self.framerate)
             count += 1
             #print (count)
             #end of iteration
-            """
-    def top_to_bottom():
+            
+    def topToBottom(self):
+        
         # top to bottom
+        indents = self.getIndents()
         y = 0
         count = 0
-        camera.start_preview(fullscreen = False, window = (960,0,960,540))
+        self.camera.start_preview(fullscreen = False, window = (960,0,960,540))
         while True:
-            y = topIndent + increment*count
-            if y > ((3040-1080)/3040) - (topIndent + bottomIndent):
+            y = indents["top"] + self.increment*count
+            print(y)
+            if y > ((3040-1080)/3040) - (indents["top"] + indents["bottom"]):
                 break
-            camera.zoom = (leftIndent, y ,1920/4056, 1080/3040)
+            self.camera.zoom = (indents["left"], y ,1920/4056, 1080/3040)
             #print(camera.zoom)
-            sleep(1/zoomSpeed )
+            sleep(1/self.framerate )
             count += 1
-            #print (count)
 
-    def bottom_to_top():
+    def bottomToTop(self):
+        indents = self.getIndents()
         y = 1
         count = 0
-        camera.start_preview(fullscreen = False, window = (960,0,960,540))
+        self.camera.start_preview(fullscreen = False, window = (960,0,960,540))
         # bottom to top 
         while True:
-            y = ((3040-1080)/3040) - increment*count
+            y = ((3040-1080)/3040) - self.increment*count
             if y <=0:
                 break
-            camera.zoom = (leftIndent, y ,1920/4056, 1080/3040)
+            self.camera.zoom = (indents["left"], y ,1920/4056, 1080/3040)
             #print(camera.zoom)
-            sleep(1/zoomSpeed )
+            sleep(1/self.framerate )
             count += 1
-            #print (count)
-            
-        
-    def right_to_left():
+                 
+    def rightToLeft(self):
         # top right to top left
-        x = 1 - rightIndent
+        indents = self.getIndents()
+        x = 1 - indents["right"]
         count = 0 #framerate*duration
-        camera.start_preview(fullscreen = False, window = (960,0,960,540))    
+        self.camera.start_preview(fullscreen = False, window = (960,0,960,540))    
         #for count in range(framerate*duration, 0, -1):
         while True:
-            x = (1 - ((4056-1920)/4056) - leftIndent) - increment*float(count)
-            camera.zoom = (x , topIndent, 1920/4056, 1080/3040)
-            if x <=leftIndent:
+            x = (1 - ((4056-1920)/4056) - indents["left"]) - self.increment*float(count)
+            self.camera.zoom = (x , indents["top"], 1920/4056, 1080/3040)
+            if x <=indents["left"]:
                 break
             #print(camera.zoom)
-            sleep(1/zoomSpeed )
+            sleep(1/self.framerate )
             count += 1
-            #print (count)
-     """
-
-
-
+    
     def doZoom(self):
-        print(self)
         # Is this a left to right zoom? 
         if self.sender().objectName()=='lrShow':
-            print('in lrshow')
             # If so then are we going l-r or r-l
             if self.ui.left.isChecked():
-                print('in left')
                 self.leftToRight()
             if self.ui.right.isChecked():
-                print('in right')
+                self.rightToLeft()
         else:
             # This is top to bottom
-            print('in tbshow')
             if self.ui.top.isChecked():
-                print('top')
+                self.topToBottom()
             else:
-                print('bottom')
+                self.bottomToTop()
         
-        #we need to know who sent this and we need to know which way they want it to go.who sent it is contained in the object name of the button and which way to go is contained in the state of the radio button
-    def doZoomWithRecord(args):
-        print(args)
+    def doZoomWithRecord(self):
+        #print(self)
+        fileName = self.generateFileName()
+        self.camera.start_recording(fileName)
+        # Is this a left to right zoom? 
+        if self.sender().objectName()=='lrRecord':
+            # If so then are we going l-r or r-l
+            if self.ui.left.isChecked():
+                self.leftToRight()
+            if self.ui.right.isChecked():
+                self.rightToLeft()
+        else:
+            # This is top to bottom
+            if self.ui.top.isChecked():
+                self.topToBottom()
+            else:
+                self.bottomToTop()
+        self.camera.stop_recording()
+        
     def doQuit(args):
         print(args)
         sys.exit(app.exec_())
-    def setDuration(args):
-        print(args)
-        duration=float(self.ui.duration.text())
+        
+    def getDuration(self):
+        print(self)
+        self.duration=float(self.ui.duration.text())
+        self.increment = 1.0/(self.framerate*self.duration)
+        return self.duration
 
+
+#######################################################################################
+    #                           END OF CLASS
 #######################################################################################
 if __name__ == "__main__":
     import sys

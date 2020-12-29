@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1428</width>
-    <height>746</height>
+    <width>779</width>
+    <height>624</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -93,60 +93,6 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="horizontalLayoutWidget_4">
-   <property name="geometry">
-    <rect>
-     <x>50</x>
-     <y>660</y>
-     <width>581</width>
-     <height>61</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_4">
-    <item>
-     <widget class="QRadioButton" name="radioButton_7">
-      <property name="text">
-       <string>Left</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QRadioButton" name="radioButton_8">
-      <property name="text">
-       <string>Right</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pushButton_13">
-      <property name="text">
-       <string>Left Preview</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pushButton_14">
-      <property name="text">
-       <string>Right Preview</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pushButton_15">
-      <property name="text">
-       <string>Show</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pushButton_16">
-      <property name="text">
-       <string>Record</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
@@ -159,6 +105,12 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QLabel" name="label_5">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
        <string>Horizontal Pan</string>
       </property>
@@ -227,6 +179,12 @@
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
      <widget class="QLabel" name="label_6">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
        <string>Vertical Pan</string>
       </property>
@@ -295,6 +253,9 @@
    <layout class="QVBoxLayout" name="verticalLayout_3">
     <item>
      <widget class="QLabel" name="label_7">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="text">
        <string>Diagonal with Zoom</string>
       </property>
@@ -304,6 +265,9 @@
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
        <widget class="QRadioButton" name="radioButton_3">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Left</string>
         </property>
@@ -311,6 +275,9 @@
       </item>
       <item>
        <widget class="QRadioButton" name="radioButton_4">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Right</string>
         </property>
@@ -318,6 +285,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_5">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Left Preview</string>
         </property>
@@ -325,6 +295,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_6">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Right Preview</string>
         </property>
@@ -332,6 +305,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_7">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Show</string>
         </property>
@@ -339,6 +315,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_8">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Record</string>
         </property>
@@ -351,8 +330,8 @@
   <widget class="QPushButton" name="quit">
    <property name="geometry">
     <rect>
-     <x>790</x>
-     <y>580</y>
+     <x>650</x>
+     <y>570</y>
      <width>99</width>
      <height>30</height>
     </rect>
@@ -372,14 +351,14 @@
    </property>
    <layout class="QFormLayout" name="formLayout_2">
     <item row="0" column="0">
-     <widget class="QLabel" name="duration">
+     <widget class="QLabel" name="durationLabel">
       <property name="text">
        <string>Duration</string>
       </property>
      </widget>
     </item>
     <item row="0" column="1">
-     <widget class="QLineEdit" name="lineEdit">
+     <widget class="QLineEdit" name="duration">
       <property name="text">
        <string>30</string>
       </property>
@@ -558,10 +537,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>lineEdit</sender>
+   <sender>duration</sender>
    <signal>textChanged(QString)</signal>
    <receiver>Form</receiver>
-   <slot>setDuration(QString)</slot>
+   <slot>getDuration(QString)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>517</x>
@@ -579,6 +558,6 @@
   <slot>doZoom()</slot>
   <slot>doZoomWithRecord()</slot>
   <slot>doQuit()</slot>
-  <slot>setDuration(QString)</slot>
+  <slot>getDuration(QString)</slot>
  </slots>
 </ui>
