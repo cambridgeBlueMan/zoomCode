@@ -33,7 +33,7 @@ def generateFileName(type='n'):
     
 
 
-"""
+
 name = generateFileName('s')
 print(name)
 camera = PiCamera()
@@ -54,4 +54,4 @@ while True:
         camera.start_recording(name)
     if i == 's':
         camera.stop_recording()
-"""
+

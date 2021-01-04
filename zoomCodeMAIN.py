@@ -41,12 +41,13 @@ class Code_Form(QtWidgets.QMainWindow):
         #self.doCameraStuff()
         #self.camera = PiCamera()
         # get indents from the line edit objects
-        self.framerate = 30.0
+        self.framerate = 50.0
         self.duration = self.getDuration()
         self.increment = 1.0/(self.framerate*self.duration)
-
+        self.resolution = (1920,1080)
         self.indents = self.getIndents
         self.camera.start_preview(fullscreen = False, window = (960,0,960,540))
+        self.camera.sensor_mode = 1
         
     def generateFileName(self):
         filePrefix = "vid_"
@@ -69,15 +70,16 @@ class Code_Form(QtWidgets.QMainWindow):
         print(self.sender().objectName())
         indents = self.getIndents()
         print(type(indents))
+        self.fig = 1440
         # which preview is it?
         if self.sender().objectName() == 'rightPreview':
-            startZoom = (((4056-1920)/4056) - indents["right"] , indents["top"], 1920/4056, 1080/3040)  
+            startZoom = (((4056-1920)/4056) - indents["right"] , indents["top"], self.fig/4056, 1080/3040)  
         elif self.sender().objectName() == 'leftPreview':
-            startZoom = (indents["left"], indents["top"], 1920/4056, 1080/3040)
+            startZoom = (indents["left"], indents["top"], self.fig/4056, 1080/3040)
         elif self.sender().objectName() == 'topPreview':
-            startZoom = (indents["left"], indents["top"] ,1920/4056, 1080/3040)
+            startZoom = (indents["left"], indents["top"] ,self.fig/4056, 1080/3040)
         elif self.sender().objectName() == 'bottomPreview':
-            startZoom = (indents["left"], (((3040-1080)/3040) - indents["bottom"]) ,1920/4056, 1080/3040)
+            startZoom = (indents["left"], (((3040-1080)/3040) - indents["bottom"]) ,self.fig/4056, 1080/3040)
         elif self.sender().objectName() == 'fullSensor':
             startZoom = (0,0,4056,3040)
             
@@ -97,7 +99,7 @@ class Code_Form(QtWidgets.QMainWindow):
             if x >= (4056-1920)/4056 - indents["right"]:
                 break
             #print(x)
-            self.camera.zoom = (x , indents["top"],1920/4056, 1080/3040)
+            self.camera.zoom = (x , indents["top"],self.fig/4056, 1080/3040)
             #print(camera.zoom)
             sleep(1/self.framerate)
             count += 1
@@ -116,7 +118,7 @@ class Code_Form(QtWidgets.QMainWindow):
             print(y)
             if y > ((3040-1080)/3040) - (indents["top"] + indents["bottom"]):
                 break
-            self.camera.zoom = (indents["left"], y ,1920/4056, 1080/3040)
+            self.camera.zoom = (indents["left"], y ,self.fig/4056, 1080/3040)
             #print(camera.zoom)
             sleep(1/self.framerate )
             count += 1
@@ -131,7 +133,7 @@ class Code_Form(QtWidgets.QMainWindow):
             y = ((3040-1080)/3040) - self.increment*count
             if y <=0:
                 break
-            self.camera.zoom = (indents["left"], y ,1920/4056, 1080/3040)
+            self.camera.zoom = (indents["left"], y ,self.fig/4056, 1080/3040)
             #print(camera.zoom)
             sleep(1/self.framerate )
             count += 1
@@ -145,7 +147,7 @@ class Code_Form(QtWidgets.QMainWindow):
         #for count in range(framerate*duration, 0, -1):
         while True:
             x = (1 - ((4056-1920)/4056) - indents["left"]) - self.increment*float(count)
-            self.camera.zoom = (x , indents["top"], 1920/4056, 1080/3040)
+            self.camera.zoom = (x , indents["top"], self.fig/4056, 1080/3040)
             if x <=indents["left"]:
                 break
             #print(camera.zoom)
