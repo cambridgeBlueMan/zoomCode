@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1014</width>
+    <height>757</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QWidget" name="formLayoutWidget_3">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>240</y>
+     <width>240</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <layout class="QFormLayout" name="formLayout_3">
+    <item row="1" column="1">
+     <widget class="QPushButton" name="CameraPreviewOff">
+      <property name="text">
+       <string>Off</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QPushButton" name="cameraPreviewOn">
+      <property name="text">
+       <string>On</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="cameraPreview">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Preview</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QSlider" name="brightnessSlider">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>390</y>
+     <width>369</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>100</number>
+   </property>
+   <property name="value">
+    <number>50</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <property name="tickPosition">
+    <enum>QSlider::TicksAbove</enum>
+   </property>
+   <property name="tickInterval">
+    <number>1</number>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="brightnessSpin">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>580</y>
+     <width>81</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>100</number>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="takePhoto">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>100</y>
+     <width>99</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Take Photo</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="startRecord">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>140</y>
+     <width>99</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Start Rec</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="stopRecord">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>180</y>
+     <width>99</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Stop Rec</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>340</y>
+     <width>188</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Adjust Camera Brightness</string>
+   </property>
+  </widget>
+  <widget class="QDial" name="brightnessDial">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>440</y>
+     <width>100</width>
+     <height>100</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>100</number>
+   </property>
+   <property name="notchesVisible">
+    <bool>true</bool>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>takePhoto</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>takePhoto()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>100</x>
+     <y>105</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>491</x>
+     <y>54</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>startRecord</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>startRecording()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>77</x>
+     <y>151</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>525</x>
+     <y>131</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stopRecord</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>stopRecording()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>102</x>
+     <y>202</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>535</x>
+     <y>170</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cameraPreviewOn</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>previewOn()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>222</x>
+     <y>253</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>626</x>
+     <y>219</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>CameraPreviewOff</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>previewOff()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>157</x>
+     <y>289</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>637</x>
+     <y>288</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>brightnessSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Dialog</receiver>
+   <slot>changeBrightness(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>169</x>
+     <y>397</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>569</x>
+     <y>365</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>brightnessDial</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>Dialog</receiver>
+   <slot>changeBrightness()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>96</x>
+     <y>496</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>454</x>
+     <y>452</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>brightnessSpin</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Dialog</receiver>
+   <slot>changeBrightness()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>101</x>
+     <y>604</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>490</x>
+     <y>501</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>takePhoto()</slot>
+  <slot>startRecording()</slot>
+  <slot>stopRecording()</slot>
+  <slot>previewOn()</slot>
+  <slot>previewOff()</slot>
+  <slot>changeBrightness(int)</slot>
+ </slots>
+</ui>

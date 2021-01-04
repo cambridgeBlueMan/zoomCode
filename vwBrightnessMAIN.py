@@ -1,7 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 # insert appropriate names here
-from 'yourGuiFile' import 'classNameInYourGuiFile'
+from vwBrightness import Ui_Dialog
 #
 from picamera import PiCamera
 from time import sleep
@@ -17,7 +17,7 @@ class Code_Dialog(QtWidgets.QDialog):
         super().__init__()
         # Ui_Form is the main designer generated class. so instantiate one. Precede the variable name with
         # the word 'self'
-        
+
         self.ui = Ui_Dialog()
         # now pass the main window object to it so that the setupUi method can draw all
         # the widgets into the window
@@ -40,15 +40,27 @@ class Code_Dialog(QtWidgets.QDialog):
         the code line sets the camera's framerate to the value held in the framerate variable
         """
         self.camera.framerate = self.framerate
-        
+
         # add your own method functions below
-        
+
     def someMethodName(self):
         print(self)
-        
+
     def AnotherMethod(self):
         print(self)
- 
+    def takePhoto(self):
+        print(self)
+    def startRecording(self):
+        print(self)
+    def stopRecording(self):
+        print(self)
+    def previewOn(self):
+        print(self)
+    def previewOff(self):
+        print(self)
+    def changeBrightness(self):
+        print(self)
+
 
 #######################################################################################
     #                           END OF CLASS
@@ -60,5 +72,3 @@ if __name__ == "__main__":
     # instantiate an object containing the logic code
     MainWindow = Code_Dialog()
     sys.exit(app.exec_())
-
-
