@@ -7,6 +7,7 @@ from picamera import PiCamera
 from time import sleep
 import sys
 import datetime
+import cameraFunctions
 """
 You may need to change the line declaring the class below. It will depend on the choice you make
 for your containing window: main window, dialog box etc)
@@ -26,7 +27,7 @@ class Code_Dialog(QtWidgets.QDialog):
         # now instantiate a camera object. Again the variable name is preceded by the word 'self'
         self.camera = PiCamera()
         # you might then declare and initialise some variable which will be available across the class
-        self.framerate = 50.0
+        self.framerate = 30.0
         self.resolution = (1920,1080)
         # you might then invoke some methods of your camera object
         self.camera.start_preview(fullscreen = False, window = (960,0,960,540))
@@ -49,17 +50,31 @@ class Code_Dialog(QtWidgets.QDialog):
     def AnotherMethod(self):
         print(self)
     def takePhoto(self):
-        print(self)
+        #print(self)
+        vwPhoto = cameraFunctions.generateFileName('s')
+        print(vwPhoto)
+        self.camera.capture(vwPhoto)
     def startRecording(self):
-        print(self)
+        #print(self)
+        vwVideo = cameraFunctions.generateFileName('v')
+        print(vwVideo)
+        self.camera.start_recording(vwVideo)
     def stopRecording(self):
+        #print(self)
+        #print(vwVideo)
+        self.camera.stop_recording()
+    def showPreview(self):
+        #self.camera.start_preview()
+        if self.sender().isChecked():
+            self.camera.start_preview(fullscreen = False, window = (960,0,960,540))
+        else:
+            self.camera.stop_preview()
         print(self)
-    def previewOn(self):
-        print(self)
-    def previewOff(self):
-        print(self)
+    
     def changeBrightness(self):
-        print(self)
+        #print(self)
+        print(self.sender().value())
+        self.camera.brightness = self.sender().value()
 
 
 #######################################################################################
@@ -72,3 +87,5 @@ if __name__ == "__main__":
     # instantiate an object containing the logic code
     MainWindow = Code_Dialog()
     sys.exit(app.exec_())
+                                                                                                                                                                                                                 
+                                                                                                                                                                                                                 

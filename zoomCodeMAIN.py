@@ -48,6 +48,7 @@ class Code_Form(QtWidgets.QMainWindow):
         self.indents = self.getIndents
         self.camera.start_preview(fullscreen = False, window = (960,0,960,540))
         self.camera.sensor_mode = 1
+        self.fig = 1440
         
     def generateFileName(self):
         filePrefix = "vid_"
@@ -70,7 +71,6 @@ class Code_Form(QtWidgets.QMainWindow):
         print(self.sender().objectName())
         indents = self.getIndents()
         print(type(indents))
-        self.fig = 1440
         # which preview is it?
         if self.sender().objectName() == 'rightPreview':
             startZoom = (((4056-1920)/4056) - indents["right"] , indents["top"], self.fig/4056, 1080/3040)  

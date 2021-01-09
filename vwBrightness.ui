@@ -6,52 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1014</width>
+    <width>767</width>
     <height>757</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QWidget" name="formLayoutWidget_3">
-   <property name="geometry">
-    <rect>
-     <x>40</x>
-     <y>240</y>
-     <width>240</width>
-     <height>80</height>
-    </rect>
-   </property>
-   <layout class="QFormLayout" name="formLayout_3">
-    <item row="1" column="1">
-     <widget class="QPushButton" name="CameraPreviewOff">
-      <property name="text">
-       <string>Off</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QPushButton" name="cameraPreviewOn">
-      <property name="text">
-       <string>On</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="cameraPreview">
-      <property name="font">
-       <font>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Preview</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
   <widget class="QSlider" name="brightnessSlider">
    <property name="geometry">
     <rect>
@@ -88,6 +49,9 @@
    </property>
    <property name="maximum">
     <number>100</number>
+   </property>
+   <property name="value">
+    <number>50</number>
    </property>
   </widget>
   <widget class="QPushButton" name="takePhoto">
@@ -160,7 +124,48 @@
    <property name="maximum">
     <number>100</number>
    </property>
+   <property name="value">
+    <number>50</number>
+   </property>
    <property name="notchesVisible">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="Preview">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>240</y>
+     <width>58</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Preview</string>
+   </property>
+   <property name="buddy">
+    <cstring>Preview</cstring>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="preview">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>240</y>
+     <width>101</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>CheckBox</string>
+   </property>
+   <property name="checked">
     <bool>true</bool>
    </property>
   </widget>
@@ -216,38 +221,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>cameraPreviewOn</sender>
-   <signal>clicked()</signal>
-   <receiver>Dialog</receiver>
-   <slot>previewOn()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>222</x>
-     <y>253</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>626</x>
-     <y>219</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>CameraPreviewOff</sender>
-   <signal>clicked()</signal>
-   <receiver>Dialog</receiver>
-   <slot>previewOff()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>157</x>
-     <y>289</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>637</x>
-     <y>288</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>brightnessSlider</sender>
    <signal>valueChanged(int)</signal>
    <receiver>Dialog</receiver>
@@ -295,13 +268,28 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>preview</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>Dialog</receiver>
+   <slot>showPreview(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>207</x>
+     <y>250</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>502</x>
+     <y>229</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>takePhoto()</slot>
   <slot>startRecording()</slot>
   <slot>stopRecording()</slot>
-  <slot>previewOn()</slot>
-  <slot>previewOff()</slot>
   <slot>changeBrightness(int)</slot>
+  <slot>showPreview(bool)</slot>
  </slots>
 </ui>

@@ -31,7 +31,7 @@ def generateFileName(type='n'):
     if type == 'n':
         print("You must provide a file type for this function")
     
-
+"""
 
 
 name = generateFileName('s')
@@ -55,3 +55,4 @@ while True:
     if i == 's':
         camera.stop_recording()
 
+"""
