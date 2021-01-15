@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(779, 624)
+        Form.resize(1170, 624)
         self.formLayoutWidget = QtWidgets.QWidget(Form)
         self.formLayoutWidget.setGeometry(QtCore.QRect(70, 40, 231, 171))
         self.formLayoutWidget.setObjectName("formLayoutWidget")
@@ -171,6 +171,12 @@ class Ui_Form(object):
         self.fullSensor = QtWidgets.QPushButton(self.formLayoutWidget_2)
         self.fullSensor.setObjectName("fullSensor")
         self.formLayout_2.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.fullSensor)
+        self.isGetFileName = QtWidgets.QCheckBox(Form)
+        self.isGetFileName.setGeometry(QtCore.QRect(550, 50, 181, 27))
+        self.isGetFileName.setObjectName("isGetFileName")
+        self.captureStill = QtWidgets.QPushButton(Form)
+        self.captureStill.setGeometry(QtCore.QRect(830, 70, 99, 30))
+        self.captureStill.setObjectName("captureStill")
 
         self.retranslateUi(Form)
         self.rightPreview.clicked.connect(Form.setAndShowPreview)
@@ -184,6 +190,7 @@ class Ui_Form(object):
         self.fullSensor.clicked.connect(Form.setAndShowPreview)
         self.quit.clicked.connect(Form.doQuit)
         self.duration.textChanged['QString'].connect(Form.getDuration)
+        self.captureStill.clicked.connect(Form.doCaptureStill)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
@@ -222,4 +229,6 @@ class Ui_Form(object):
         self.durationLabel.setText(_translate("Form", "Duration"))
         self.duration.setText(_translate("Form", "30"))
         self.fullSensor.setText(_translate("Form", "Full Sensor"))
+        self.isGetFileName.setText(_translate("Form", "Prompt for File Name"))
+        self.captureStill.setText(_translate("Form", "Snap!"))
 

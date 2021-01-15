@@ -1,4 +1,5 @@
 from picamera import PiCamera
+from PyQt5 import QtCore, QtGui, QtWidgets
 from time import sleep
 import sys
 import datetime
@@ -30,6 +31,13 @@ def generateFileName(type='n'):
         return path + filePrefix + str(datetime.datetime.now()).replace(':','_').replace('.', '_').replace(' ','') + fileExtension
     if type == 'n':
         print("You must provide a file type for this function")
+        
+def getFileNameFromUser():
+    """
+    open a qt file dialog box so that the user can provide their own filename
+    """
+    fileName = QtWidgets.QFileDialog.getSaveFileName() #getExistingDirectory(args[0], "get directory", "/home")
+    return fileName[0]
     
 """
 
