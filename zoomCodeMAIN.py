@@ -47,7 +47,7 @@ class Code_Form(QtWidgets.QMainWindow):
         self.sensorHeight = 3040
         self.pixelWidth  = 1/self.sensorWidth
         self.pixelHeight = 1/self.sensorHeight
-        self.resolutionWidth = 1920
+        self.resolutionWidth = 960 #1920
         self.resolutionHeight = 1080
         self.camera.resolution = (self.resolutionWidth, self.resolutionHeight)
         #self.camera.rotation = 180
@@ -58,7 +58,7 @@ class Code_Form(QtWidgets.QMainWindow):
         self.increment = 1.0/self.sensorWidth #(self.framerate*self.duration)
         self.resolution = (1920,1080)
         self.indents = self.getIndents
-        self.camera.start_preview(fullscreen = False, window = (960,0,960,540))
+        self.camera.start_preview(fullscreen = False, window = (1260,0,480,540))
         self.camera.sensor_mode = 1
         self.camera.framerate = self.framerate
         self.fig = 1440
